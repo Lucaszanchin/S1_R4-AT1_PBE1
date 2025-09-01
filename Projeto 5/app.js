@@ -1,12 +1,12 @@
-const express = require("express");
-const app = express();
-const PORT = 3005;
+const express = require("express"); //Importa o framework Express para criar o servidor HTTP
+const app = express(); //Cria a aplicação Express, que será usada para definir rotas e configurar o servidor
+const PORT = 3005; //Declara a porta do servidor
 
 app.get("/saudacao/:nome", (req, res) => {
 
   try {
 
-    const {nome} = req.params;
+    const {nome} = req.params; //Desestrutura os parâmetros enviados na URL e definará nome como params e hora como query
     const {hora} = req.query;
     const horaNum = parseInt(hora);
     let saudacao;
@@ -25,15 +25,15 @@ app.get("/saudacao/:nome", (req, res) => {
 
     } else {
 
-      return res.send("Hora inválida. Coloque um valor entre 0 e 23, por favor.");
+      return res.status(400).send("Hora inválida. Coloque um valor entre 0 e 23, por favor.");
 
     }
 
-    res.send(`${saudacao}, ${nome}!`);
+    res.status(200).send(`${saudacao}, ${nome}!`); //Aqui irá mostrar o status 200, que é quando a requisição é feita com sucesso
 
   } catch (erro) {
 
-    console.error(`Erro ao fazer o processamento: ${erro}`)
+    console.error(`Erro ao fazer o processamento: ${erro}`) //Mostrará caso ocorrer erro no servidor
     res.status(500).send("Erro ao processar a requisição!")
 
   }
